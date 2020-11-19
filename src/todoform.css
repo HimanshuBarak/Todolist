@@ -1,0 +1,20 @@
+.todoform {
+  display: flex;
+  justify-content: center;
+  color: white;
+}
+
+.todoform > input {
+  background: white;
+  padding: 25px;
+  width: 30%;
+  border: none;
+  font-size:1.4em;
+}
+.todoform > button {
+  background: white;
+  border: none;
+}
+.todoform > input:focus {
+  outline: none;
+}

@@ -1,23 +1,55 @@
-import logo from './logo.svg';
+import React,{useEffect,useState} from 'react'
+import Todoform from './Todoform';
 import './App.css';
+import TodoList from './TodoList';
+
+const Localstorage_key = "ls_ley";  //you can name it anything :)
+
 
 function App() {
+const [todos, settodos] = useState([]);
+console.log(todos)
+
+
+useEffect(() => {
+  const localstrtodos = JSON.parse(localStorage.getItem(Localstorage_key));
+   if(localstrtodos){
+     settodos(localstrtodos);
+   }
+}, [])
+//to store the list in local storage of the browser on each new entry
+useEffect(() => {
+   localStorage.setItem(Localstorage_key,JSON.stringify(todos));
+ 
+}, [todos])
+
+//to chane the toogle complete
+let togglecomplete = (id)=>{
+  settodos(todos.map(todo=>{
+      if(todo.id ===id){
+        return({
+          ...todo,complete:!todo.complete
+        })
+      }
+      return todo;
+  }))
+}
+//for adding a todo
+let addtodo = todo=>{
+   settodos([todo,...todos])
+}
+
+
+//for removing a todo
+let removeTodo = (id)=>{
+  settodos(todos.filter(todo=>todo.id!==id));
+} 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <h1>TO DO LIST</h1>
+      <Todoform addtodo={addtodo}/>
+      <TodoList todos={todos} removeTodo={removeTodo} togglecomplete={togglecomplete}/>
     </div>
   );
 }
