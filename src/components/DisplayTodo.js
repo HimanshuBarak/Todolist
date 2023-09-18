@@ -1,8 +1,12 @@
 import React from 'react'
 import Todo from './Todo';
 import './todolist.css'
+import {useSelector} from 'react-redux'
+
 //this component basically prints the todo list
-function TodoList({todos,removeTodo,togglecomplete}) {
+function DisplayTodo() {
+    // simple methods takes a  callback 
+    let todos = useSelector(state=> state.todos)
     return (
         <div className="todo_list">
             <ul >
@@ -10,16 +14,12 @@ function TodoList({todos,removeTodo,togglecomplete}) {
               return(
                 <Todo key={todo.id} 
                 todo={todo} 
-                removeTodo ={removeTodo}
-                togglecomplete ={togglecomplete} 
                 />
               ) 
-             
            })} 
         </ul>
-        </div>
-       
+        </div>   
     )
 }
 
-export default TodoList
+export default DisplayTodo
